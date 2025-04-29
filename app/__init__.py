@@ -8,7 +8,6 @@ import logging
 
 apifairy = APIFairy()
 ma = Marshmallow()
-logger = Logger(LogLevel.INFO)
 cache = Cache(
     config={
         "CACHE_TYPE": "FileSystemCache",
