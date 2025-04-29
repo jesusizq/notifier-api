@@ -1,7 +1,7 @@
 from flask import jsonify
-from . import tasks_api as api
+from . import health_bp
 
 
-@api.route("/", methods=["GET"])
+@health_bp.route("/", methods=["GET"])
 def health():
     return jsonify({"status": "ok"}), 200

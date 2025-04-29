@@ -5,18 +5,10 @@ from flask import Flask
 from apifairy import APIFairy
 from flask_caching import Cache
 from flask_marshmallow import Marshmallow
+from .extensions import apifairy, ma, cache
 from .adapters.email import EmailNotificationAdapter
 from .adapters.slack import SlackNotificationAdapter
 from .use_cases.handle_request import HandleAssistanceRequest
-
-apifairy = APIFairy()
-ma = Marshmallow()
-cache = Cache(
-    config={
-        "CACHE_TYPE": "FileSystemCache",
-        "CACHE_DIR": os.path.join(tempfile.gettempdir(), "cache"),
-    }
-)
 
 
 def create_app(config_name):
@@ -74,8 +66,9 @@ def create_app(config_name):
     # Routes can access this via current_app.assistance_request_handler
     app.assistance_request_handler = assistance_request_handler
 
+    # Initialize extensions
+    ma.init_app(app)  # Initialize Marshmallow before APIFairy
     apifairy.init_app(app)
-    ma.init_app(app)
     cache.init_app(app)
 
     # Import and Register Blueprints

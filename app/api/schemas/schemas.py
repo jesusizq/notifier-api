@@ -1,7 +1,8 @@
-from marshmallow import Schema, fields, validate
+from marshmallow import fields, validate
+from app.extensions import ma  # Import the Marshmallow instance
 
 
-class AssistanceRequestSchema(Schema):
+class AssistanceRequestSchema(ma.Schema):
     topic = fields.Str(
         required=True,
         validate=validate.OneOf(
@@ -14,5 +15,5 @@ class AssistanceRequestSchema(Schema):
     )
 
 
-class NotificationResponseSchema(Schema):
+class NotificationResponseSchema(ma.Schema):
     message = fields.Str(required=True)

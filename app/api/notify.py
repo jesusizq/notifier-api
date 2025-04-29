@@ -1,5 +1,5 @@
 import logging
-from flask import current_app, make_response, jsonify
+from flask import current_app, make_response, jsonify, request
 from apifairy import arguments, response
 from typing import cast
 
@@ -12,10 +12,11 @@ logger = logging.getLogger(__name__)
 
 
 @notify_bp.route("/", methods=["POST"])
-@arguments(AssistanceRequestSchema)
+@arguments(AssistanceRequestSchema, location="json")
 @response(NotificationResponseSchema, status_code=202)
 def handle_notification(validated_data):
     """Handle incoming assistance requests."""
+
     try:
         assistance_request = AssistanceRequest(
             topic=validated_data["topic"],
