@@ -13,7 +13,9 @@ The following environment variables are required to run the app:
 ```sh
 FLASK_APP=run.py
 FLASK_CONFIG=testing
-TEST_DATABASE_URL
+TEST_DATABASE_URL=<test_database_url>
+SLACK_BOT_TOKEN=<slack_bot_token>
+TEST_SLACK_BOT_TOKEN=<test_slack_bot_token>
 ```
 
 ## Dependencies

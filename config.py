@@ -3,6 +3,8 @@ import os
 
 class Config:
     DEBUG = False
+    SLACK_BOT_TOKEN = os.environ.get("SLACK_BOT_TOKEN")
+    SLACK_CHANNEL_ID = os.environ.get("SLACK_CHANNEL_ID")
 
 
 class DevelopmentConfig(Config):
@@ -16,6 +18,8 @@ class ProductionConfig(Config):
 class TestingConfig(Config):
     TESTING = True
     DEBUG = True
+    SLACK_BOT_TOKEN = os.environ.get("TEST_SLACK_BOT_TOKEN") or None
+    SLACK_CHANNEL_ID = os.environ.get("TEST_SLACK_CHANNEL_ID") or None
 
 
 config = {

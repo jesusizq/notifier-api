@@ -1,7 +1,10 @@
 from flask import Blueprint
 from flask_cors import CORS
 
-tasks_api = Blueprint("Tasks", __name__)
-CORS(tasks_api)
+health_bp = Blueprint("Health", __name__)
+CORS(health_bp)
+notify_bp = Blueprint("Notify", __name__)
+CORS(notify_bp)
 
-from . import tasks
+from . import health
+from . import notify
