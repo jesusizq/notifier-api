@@ -1,0 +1,49 @@
+name: "notifier"
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: app
+    container_name: notifier_app
+    volumes:
+      - ../app:/home/appuser/app
+      - ../config.py:/home/appuser/config.py
+      - ../run.py:/home/appuser/run.py
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/v1/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    environment:
+      FLASK_ENV: development
+      FLASK_DEBUG: 1
+      FLASK_APP: ${FLASK_APP}
+      FLASK_CONFIG: ${FLASK_CONFIG}
+      SLACK_TOKEN: ${SLACK_TOKEN}
+      SLACK_CHANNEL_ID: ${SLACK_CHANNEL_ID}
+      TEST_SLACK_BOT_TOKEN: ${TEST_SLACK_BOT_TOKEN}
+
+  nginx:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: nginx
+    container_name: notifier_nginx
+    ports:
+      - "8080:80"
+      #- "443:443"
+    volumes:
+      - nginx_logs:/var/log/nginx
+      - nginx_cache:/var/cache/nginx
+    depends_on:
+      app:
+        condition: service_healthy
+    restart: always
+
+volumes:
+  nginx_cache:
+  nginx_logs:

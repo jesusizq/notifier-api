@@ -1,10 +1,5 @@
-import os
-import tempfile
 import logging
 from flask import Flask
-from apifairy import APIFairy
-from flask_caching import Cache
-from flask_marshmallow import Marshmallow
 from .extensions import apifairy, ma, cache
 from .adapters.email import EmailNotificationAdapter
 from .adapters.slack import SlackNotificationAdapter
