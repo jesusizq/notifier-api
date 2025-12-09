@@ -11,7 +11,7 @@ from . import notify_bp
 logger = logging.getLogger(__name__)
 
 
-@notify_bp.route("/", methods=["POST"])
+@notify_bp.route("", methods=["POST"], strict_slashes=False)
 @arguments(AssistanceRequestSchema, location="json")
 @response(NotificationResponseSchema, status_code=202)
 def handle_notification(validated_data):
